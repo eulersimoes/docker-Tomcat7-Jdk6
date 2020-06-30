@@ -1,0 +1,66 @@
+How to Manually Install Java 8 on Ubuntu 16.04
+Last Updated: Fri, Dec 15, 2017 
+Java
+Linux Guides
+Ubuntu
+In this guide, you'll learn how to manually install Java 8 on Ubuntu 16.04. The instructions in this tutorial will work on other versions of Ubuntu as well, including 14.04, 16.10, and 17.04.
+
+Prerequisites
+A text editor, whether it's vi, vim, emacs, etc.
+Step 1: Download the latest JDK
+It is recommended that you install only the latest JDK.
+
+# wget http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-i586.tar.gz
+Step 2: Extract JDK to Java's default location
+Create a jvm folder in /usr/lib/ which is the default location for Java.
+
+# sudo mkdir /usr/lib/jvm
+Go to the created /usr/lib/jvm folder.
+
+# cd /usr/lib/jvm
+Extract the downloaded JDK.
+
+# sudo tar -xvzf ~/Downloads/jdk-8u151-linux-x64.tar.gz
+Step 3: Set environment variables
+Edit the environment file.
+
+# vi /etc/environment
+Update the existing PATH variable by adding the below bin folders, separated with a colon :.
+
+/usr/lib/jvm/jdk1.8.0_151/bin:/usr/lib/jvm/jdk1.8.0_151/db/bin:/usr/lib/jvm/jdk1.8.0_151/jre/bin
+HOME directory paths can be different based on version and update,here the version is 1.8 and the update is 151. Add the below variables at the end of environment file, making changes for your specific version and update.
+
+J2SDKDIR="/usr/lib/jvm/jdk1.8.0_151"
+J2REDIR="/usr/lib/jvm/jdk1.8.0_151/jre"
+JAVA_HOME="/usr/lib/jvm/jdk1.8.0_151"
+DERBY_HOME="/usr/lib/jvm/jdk1.8.0_151/db"
+The environment file should now be similar to this text:
+
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/jvm/jdk1.8.0_151/bin:/usr/lib/jvm/jdk1.8.0_151/db/bin:/usr/lib/jvm/jdk1.8.0_151/jre/bin"
+J2SDKDIR="/usr/lib/jvm/jdk1.8.0_151"
+J2REDIR="/usr/lib/jvm/jdk1.8.0_151/jre*
+JAVA_HOME="/usr/lib/jvm/jdk1.8.0_151"
+DERBY_HOME="/usr/lib/jvm/jdk1.8.0_151/db"
+Save changes and close the file.
+
+Step 4: Inform Ubuntu about the installed location
+Use update-alternatives to inform Ubuntu about the installed java paths.
+
+# sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0_151/bin/java" 0
+# sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8.0_151/bin/javac" 0
+# sudo update-alternatives --set java /usr/lib/jvm/jdk1.8.0_151/bin/java
+# sudo update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_151/bin/javac
+Step 5: Setup verification
+Give the location of java and javac as you provided.
+
+# update-alternatives --list java
+# update-alternatives --list javac
+Restart the computer or open a new terminal.
+
+Step 6: Verify the Java version
+# java -version
+The output should resemble the following:
+
+java version "1.8.0_151"
+Java(TM) SE Runtime Environment (build 1.8.0_151-b12)
+Java HotSpot(TM) 64-Bit Server VM (build 25.151-b12, mixed mode)
